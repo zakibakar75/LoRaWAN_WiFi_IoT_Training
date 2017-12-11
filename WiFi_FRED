@@ -1,0 +1,310 @@
+[
+    {
+        "id": "3a666ce2.1db574",
+        "type": "function",
+        "z": "4c0447d.50d15b8",
+        "name": "Sensor_Parser",
+        "func": "msg.payload = {\n    Humidity:msg.payload.Humidity,\n    Temperature:msg.payload.Temperature,\n    Voltage:msg.payload.Voltage\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 421,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "66131708.9c9798",
+        "type": "mqtt in",
+        "z": "4c0447d.50d15b8",
+        "name": "MQTT for TempSensor",
+        "topic": "/zaki.bm@gmail.com/#",
+        "qos": "2",
+        "broker": "4d9c83d2.43f69c",
+        "x": 159,
+        "y": 61,
+        "wires": [
+            [
+                "c48be05c.be98"
+            ]
+        ]
+    },
+    {
+        "id": "4bd4921b.8deadc",
+        "type": "debug",
+        "z": "4c0447d.50d15b8",
+        "name": "Debug JSON Output",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 442.5,
+        "y": 187.29998779296875,
+        "wires": []
+    },
+    {
+        "id": "c48be05c.be98",
+        "type": "json",
+        "z": "4c0447d.50d15b8",
+        "name": "",
+        "x": 167,
+        "y": 269.4499969482422,
+        "wires": [
+            [
+                "3a666ce2.1db574",
+                "86e996e5.d4f0a8",
+                "602dbd01.194204",
+                "4bd4921b.8deadc",
+                "479fc96a.8e87f8",
+                "4c659bd8.2e3824"
+            ]
+        ]
+    },
+    {
+        "id": "86e996e5.d4f0a8",
+        "type": "function",
+        "z": "4c0447d.50d15b8",
+        "name": "Humidity",
+        "func": "msg.payload = msg.payload.Humidity\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 402,
+        "y": 239.45001220703125,
+        "wires": [
+            [
+                "6165edd4.6becd4"
+            ]
+        ]
+    },
+    {
+        "id": "6165edd4.6becd4",
+        "type": "ui_chart",
+        "z": "4c0447d.50d15b8",
+        "name": "Humidity",
+        "group": "b19cef70.34fb3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Humidity",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Waiting For Data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "2",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#00ff00",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 573,
+        "y": 239.45001220703125,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "602dbd01.194204",
+        "type": "function",
+        "z": "4c0447d.50d15b8",
+        "name": "Temperature",
+        "func": "msg.payload = msg.payload.Temperature\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 284.45001220703125,
+        "wires": [
+            [
+                "77ecd122.8b2a9"
+            ]
+        ]
+    },
+    {
+        "id": "77ecd122.8b2a9",
+        "type": "ui_chart",
+        "z": "4c0447d.50d15b8",
+        "name": "Temperature",
+        "group": "72b0e2f1.25b71c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Waiting For Data",
+        "dot": true,
+        "ymin": "20",
+        "ymax": "70",
+        "removeOlder": "2",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 582,
+        "y": 284.45001220703125,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "479fc96a.8e87f8",
+        "type": "function",
+        "z": "4c0447d.50d15b8",
+        "name": "Voltage",
+        "func": "msg.payload = msg.payload.Voltage\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 400,
+        "y": 331,
+        "wires": [
+            [
+                "d008653a.0684e8"
+            ]
+        ]
+    },
+    {
+        "id": "d008653a.0684e8",
+        "type": "ui_gauge",
+        "z": "4c0447d.50d15b8",
+        "name": "",
+        "group": "cada42ce.7c6ba",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Voltage Level",
+        "label": "mV",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "6000",
+        "colors": [
+            "#ff0000",
+            "#e6e600",
+            "#5cb900"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 591,
+        "y": 328,
+        "wires": []
+    },
+    {
+        "id": "4c659bd8.2e3824",
+        "type": "function",
+        "z": "4c0447d.50d15b8",
+        "name": "Date",
+        "func": "msg.payload = new Date().toString();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 388,
+        "y": 374,
+        "wires": [
+            [
+                "f895d9b4.f6f1b8"
+            ]
+        ]
+    },
+    {
+        "id": "f895d9b4.f6f1b8",
+        "type": "ui_text",
+        "z": "4c0447d.50d15b8",
+        "group": "cada42ce.7c6ba",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "Date",
+        "label": "Date & Time ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 564,
+        "y": 374,
+        "wires": []
+    },
+    {
+        "id": "4d9c83d2.43f69c",
+        "type": "mqtt-broker",
+        "z": "4c0447d.50d15b8",
+        "broker": "mqtt.dioty.co",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": ""
+    },
+    {
+        "id": "b19cef70.34fb3",
+        "type": "ui_group",
+        "z": "",
+        "name": "Humidity",
+        "tab": "ef40e685.85c618",
+        "order": 3,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "72b0e2f1.25b71c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Temperature",
+        "tab": "ef40e685.85c618",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "cada42ce.7c6ba",
+        "type": "ui_group",
+        "z": "",
+        "name": "Voltage",
+        "tab": "ef40e685.85c618",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "ef40e685.85c618",
+        "type": "ui_tab",
+        "z": "",
+        "name": "WiFi Temp & Humidity",
+        "icon": "dashboard",
+        "order": 5
+    }
+]
