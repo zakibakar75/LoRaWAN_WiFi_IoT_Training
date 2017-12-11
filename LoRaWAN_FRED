@@ -1,0 +1,295 @@
+[
+    {
+        "id": "bdbff484.a621c8",
+        "type": "mqtt in",
+        "z": "e64f90e7.b8948",
+        "name": "MQTT Client",
+        "topic": "arduino_ukm/devices/+/up",
+        "qos": "2",
+        "broker": "3b53095b.074556",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "476d3185.8a6d5"
+            ]
+        ]
+    },
+    {
+        "id": "476d3185.8a6d5",
+        "type": "json",
+        "z": "e64f90e7.b8948",
+        "name": "",
+        "x": 194,
+        "y": 130,
+        "wires": [
+            [
+                "4fac1d8e.115254",
+                "5748aaa.550f954",
+                "b048f5ee.b53d58",
+                "db01eab5.4f09d8"
+            ]
+        ]
+    },
+    {
+        "id": "f5506451.ad55b8",
+        "type": "debug",
+        "z": "e64f90e7.b8948",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 490,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "4fac1d8e.115254",
+        "type": "function",
+        "z": "e64f90e7.b8948",
+        "name": "Temperature",
+        "func": "msg.payload = msg.payload.payload_fields.Temperature\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "da05db84.833958"
+            ]
+        ]
+    },
+    {
+        "id": "5748aaa.550f954",
+        "type": "function",
+        "z": "e64f90e7.b8948",
+        "name": "Humidity",
+        "func": "msg.payload = msg.payload.payload_fields.Humidity\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 260,
+        "y": 300,
+        "wires": [
+            [
+                "7756d13e.714a2"
+            ]
+        ]
+    },
+    {
+        "id": "da05db84.833958",
+        "type": "ui_chart",
+        "z": "e64f90e7.b8948",
+        "name": "",
+        "group": "a5e88a91.4f7aa8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature (Celcius)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "0",
+        "ymax": "80",
+        "removeOlder": "2",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 520,
+        "y": 260,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7756d13e.714a2",
+        "type": "ui_chart",
+        "z": "e64f90e7.b8948",
+        "name": "",
+        "group": "7af71747.f07918",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Humidity (Percentage)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "2",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "db01eab5.4f09d8",
+        "type": "function",
+        "z": "e64f90e7.b8948",
+        "name": "Date ",
+        "func": "msg.payload = msg.payload.metadata.time\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 250,
+        "y": 400,
+        "wires": [
+            [
+                "461dd02b.2f108"
+            ]
+        ]
+    },
+    {
+        "id": "b048f5ee.b53d58",
+        "type": "function",
+        "z": "e64f90e7.b8948",
+        "name": "Voltage",
+        "func": "msg.payload = msg.payload.payload_fields.Voltage\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 260,
+        "y": 360,
+        "wires": [
+            [
+                "c2b44b83.ace1a8",
+                "f5506451.ad55b8"
+            ]
+        ]
+    },
+    {
+        "id": "c2b44b83.ace1a8",
+        "type": "ui_gauge",
+        "z": "e64f90e7.b8948",
+        "name": "",
+        "group": "6d4abda6.1e9b54",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Voltage",
+        "label": "Volt",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "6",
+        "colors": [
+            "#ff0000",
+            "#e6e600",
+            "#00ff40"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 479,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "461dd02b.2f108",
+        "type": "ui_text",
+        "z": "e64f90e7.b8948",
+        "group": "6d4abda6.1e9b54",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "Date",
+        "label": "Timestamp (in UTC)",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 471,
+        "y": 404,
+        "wires": []
+    },
+    {
+        "id": "3b53095b.074556",
+        "type": "mqtt-broker",
+        "z": "e64f90e7.b8948",
+        "broker": "us-west.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": ""
+    },
+    {
+        "id": "a5e88a91.4f7aa8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Temperature",
+        "tab": "98595549.c4b808",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "7af71747.f07918",
+        "type": "ui_group",
+        "z": "",
+        "name": "Humidity",
+        "tab": "98595549.c4b808",
+        "order": 3,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "6d4abda6.1e9b54",
+        "type": "ui_group",
+        "z": "e64f90e7.b8948",
+        "name": "Voltage",
+        "tab": "98595549.c4b808",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "98595549.c4b808",
+        "type": "ui_tab",
+        "z": "",
+        "name": "LoRaWAN Temp & Humidity",
+        "icon": "dashboard",
+        "order": 6
+    }
+]
