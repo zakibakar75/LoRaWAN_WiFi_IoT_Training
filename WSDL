@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:impl="http://ws.fund.ogl.org" targetNamespace="http://ws.fund.ogl.org">
+
+    <wsdl:types>
+    <schema targetNamespace="http://ws.fund.ogl.org" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified">
+        <xsd:import schemaLocation="oglfundws?xsd=xmime.xsd" namespace="http://www.w3.org/2005/05/xmlmime"/>
+
+        <element name="LoginRequest">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="InternalID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Operator" type="xsd:string"/>
+	            <element name="Balance" type="xsd:long"/>
+	            <element name="Cryptogram" type="xsd:string"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="LoginResponse">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Timeout" type="xsd:int"/>
+	            <element name="ResponseCode" type="xsd:string"/>
+	            <element name="ResponseMsg" type="xsd:string" nillable="true"/>
+	            <element name="Cryptogram" type="xsd:string" nillable="true"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="CheckBalanceRequest">
+        <complexType>
+            <sequence>
+	            <element name="SPID" type="xsd:string"/>
+	            <element name="ReaderID" type="xsd:string" nillable="true"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Operator" type="xsd:string"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="CheckBalanceResponse">
+        <complexType>
+            <sequence>
+	            <element name="SPID" type="xsd:string"/>
+	            <element name="ReaderID" type="xsd:string" nillable="true"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Balance" type="xsd:long"/>
+	            <element name="ResponseCode" type="xsd:string"/>
+	            <element name="ResponseMsg" type="xsd:string" nillable="true"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="FundRequest">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="InternalID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Operator" type="xsd:string"/>
+	            <element name="Balance" type="xsd:long"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="TransNumber" type="xsd:int"/>
+	            <element name="Amount" type="xsd:long"/>
+	            <element name="ManufacturerNumber" type="xsd:string" nillable="true"/>
+	            <element name="CardNumber" type="xsd:string" nillable="true"/>
+	            <element name="MachineCode" type="xsd:string" nillable="true"/>
+	            <element name="LastMachineCode" type="xsd:string" nillable="true"/>
+	            <element name="IssuerSPID" type="xsd:string" nillable="true"/>
+	            <element name="IssuerMachineCode" type="xsd:string" nillable="true"/>
+	            <element name="Cryptogram" type="xsd:string"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="FundResponse">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="TransNumber" type="xsd:int"/>
+	            <element name="ResponseCode" type="xsd:string"/>
+	            <element name="ResponseMsg" type="xsd:string" nillable="true"/>
+	            <element name="Cryptogram" type="xsd:string" nillable="true"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="CardBalanceRefundRequest">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="InternalID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Operator" type="xsd:string"/>
+	            <element name="Balance" type="xsd:long"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="TransNumber" type="xsd:int"/>
+	            <element name="Amount" type="xsd:long"/>
+	            <element name="ManufacturerNumber" type="xsd:string" nillable="true"/>
+	            <element name="CardNumber" type="xsd:string" nillable="true"/>
+	            <element name="MachineCode" type="xsd:string" nillable="true"/>
+	            <element name="LastMachineCode" type="xsd:string" nillable="true"/>
+	            <element name="IssuerSPID" type="xsd:string" nillable="true"/>
+	            <element name="IssuerMachineCode" type="xsd:string" nillable="true"/>
+	            <element name="Cryptogram" type="xsd:string"/>
+            </sequence>
+        </complexType> 
+        </element>
+
+        <element name="CardBalanceRefundResponse">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="TransNumber" type="xsd:int"/>
+	            <element name="Amount" type="xsd:long"/>
+	            <element name="ResponseCode" type="xsd:string"/>
+	            <element name="ResponseMsg" type="xsd:string" nillable="true"/>
+	            <element name="Cryptogram" type="xsd:string" nillable="true"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="TransactionUploadRequest">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="InternalID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Operator" type="xsd:string"/>
+	            <element name="Balance" type="xsd:long"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="TransNumber" type="xsd:int"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="CardBalanceRefundResponse">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="TransNumber" type="xsd:int"/>
+	            <element name="Amount" type="xsd:long"/>
+	            <element name="ResponseCode" type="xsd:string"/>
+	            <element name="ResponseMsg" type="xsd:string" nillable="true"/>
+	            <element name="Cryptogram" type="xsd:string" nillable="true"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="TransactionUploadRequest">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="InternalID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Operator" type="xsd:string"/>
+	            <element name="Balance" type="xsd:long"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="TransNumber" type="xsd:int"/>
+	            <element name="Amount" type="xsd:long"/>
+	            <element name="TransType" type="xsd:string"/>
+	            <element name="TransIDType" type="xsd:string"/>
+	            <element name="TransStatus" type="xsd:string"/>
+	            <element name="TransStatusMsg" type="xsd:string" nillable="true" minOccurs="0"/>
+	            <element name="Data" type="xsd:string"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="TransactionUploadResponse">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="TransNumber" type="xsd:int"/>
+	            <element name="TransType" type="xsd:string"/>
+	            <element name="TransIDType" type="xsd:string"/>
+	            <element name="TransStatus" type="xsd:string"/>
+	            <element name="ResponseCode" type="xsd:string"/>
+	            <element name="ResponseMsg" type="xsd:string" nillable="true"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="BatchUploadRequest">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="InternalID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Operator" type="xsd:string"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="FileName" type="xsd:string"/>
+	            <element name="FileData" type="xmime:base64Binary" xmime:expectedContentTypes="*/*"/>
+	            <element name="CheckSum" type="xsd:string"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="BatchUploadResponse">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="BatchNumber" type="xsd:int"/>
+	            <element name="FileName" type="xsd:string"/>
+	            <element name="ResponseCode" type="xsd:string"/>
+	            <element name="ResponseMsg" type="xsd:string" nillable="true"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="ParameterRequest">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="InternalID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="Operator" type="xsd:string"/>
+	            <element name="FileName" type="xsd:string"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="ParameterResponse">
+        <complexType>
+            <sequence>
+	            <element name="ReaderID" type="xsd:string"/>
+	            <element name="TransRef" type="xsd:string"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="FileName" type="xsd:string"/>
+	            <element name="ResponseCode" type="xsd:string"/>
+	            <element name="ResponseMsg" type="xsd:string" nillable="true"/>
+	            <element name="FileData" type="xmime:base64Binary" nillable="true" xmime:expectedContentTypes="*/*"/>
+	            <element name="CheckSum" type="xsd:string" nillable="true"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="NetworkRequest">
+        <complexType>
+            <sequence>
+	            <element name="SPID" type="xsd:string"/>
+	            <element name="ReaderID" type="xsd:string" nillable="true"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+            </sequence>
+        </complexType>
+        </element>
+
+        <element name="NetworkResponse">
+        <complexType>
+            <sequence>
+	            <element name="SPID" type="xsd:string"/>
+	            <element name="ReaderID" type="xsd:string" nillable="true"/>
+	            <element name="TransDateTime" type="xsd:string"/>
+	            <element name="ResponseCode" type="xsd:string"/>
+	            <element name="ResponseMsg" type="xsd:string" nillable="true"/>
+            </sequence>
+        </complexType>
+        </element>
+
+    </schema>
+    </wsdl:types>
+
+    <wsdl:message name="TransactionUploadResponse">
+        <wsdl:part name="parameters" element="impl:TransactionUploadResponse"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="NetworkResponse">
+        <wsdl:part name="parameters" element="impl:NetworkResponse"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="CardBalanceRefundRequest">
+        <wsdl:part name="parameters" element="impl:CardBalanceRefundRequest"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="BatchUploadResponse">
+        <wsdl:part name="parameters" element="impl:BatchUploadResponse"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="ParameterResponse">
+        <wsdl:part name="parameters" element="impl:ParameterResponse"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="FundRequest">
+        <wsdl:part name="parameters" element="impl:FundRequest"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="CheckBalanceRequest">
+        <wsdl:part name="parameters" element="impl:CheckBalanceRequest"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="ParameterRequest">
+        <wsdl:part name="parameters" element="impl:ParameterRequest"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="FundResponse">
+        <wsdl:part name="parameters" element="impl:FundResponse"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="CardBalanceRefundResponse">
+        <wsdl:part name="parameters" element="impl:CardBalanceRefundResponse"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="TransactionUploadRequest">
+        <wsdl:part name="parameters" element="impl:TransactionUploadRequest"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="BatchUploadRequest">
+        <wsdl:part name="parameters" element="impl:BatchUploadRequest"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="LoginRequest">
+        <wsdl:part name="parameters" element="impl:LoginRequest"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="NetworkRequest">
+        <wsdl:part name="parameters" element="impl:NetworkRequest"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="CheckBalanceResponse">
+        <wsdl:part name="parameters" element="impl:CheckBalanceResponse"> </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:message name="LoginResponse">
+        <wsdl:part name="parameters" element="impl:LoginResponse"> </wsdl:part>    
+    </wsdl:message>
+
+
+    <wsdl:portType name="OglFundWs">
+
+        <wsdl:operation name="login">
+            <wsdl:input name="LoginRequest" message="impl:LoginRequest"> </wsdl:input>
+            <wsdl:output name="LoginResponse" message="impl:LoginResponse"> </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="checkBalance">
+            <wsdl:input name="CheckBalanceRequest" message="impl:CheckBalanceRequest"> </wsdl:input>
+            <wsdl:output name="CheckBalanceResponse" message="impl:CheckBalanceResponse"> </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="fundRequest">
+            <wsdl:input name="FundRequest" message="impl:FundRequest"> </wsdl:input>
+            <wsdl:output name="FundResponse" message="impl:FundResponse"> </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="cardBalanceRefund">
+            <wsdl:input name="CardBalanceRefundRequest" message="impl:CardBalanceRefundRequest"> </wsdl:input>
+            <wsdl:output name="CardBalanceRefundResponse" message="impl:CardBalanceRefundResponse"> </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="transactionUpload">
+            <wsdl:input name="TransactionUploadRequest" message="impl:TransactionUploadRequest"> </wsdl:input>
+            <wsdl:output name="TransactionUploadResponse" message="impl:TransactionUploadResponse"> </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="batchUpload">
+            <wsdl:input name="BatchUploadRequest" message="impl:BatchUploadRequest"> </wsdl:input>
+            <wsdl:output name="BatchUploadResponse" message="impl:BatchUploadResponse"> </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="parameterRequest">
+            <wsdl:input name="ParameterRequest" message="impl:ParameterRequest"> </wsdl:input>
+            <wsdl:output name="ParameterResponse" message="impl:ParameterResponse"> </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="networkRequest">
+            <wsdl:input name="NetworkRequest" message="impl:NetworkRequest"> </wsdl:input>
+            <wsdl:output name="NetworkResponse" message="impl:NetworkResponse"> </wsdl:output>
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <wsdl:binding name="oglfundwsSoapBinding" type="impl:OglFundWs">
+        <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+
+        <wsdl:operation name="login">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="LoginRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="LoginResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+
+        <wsdl:operation name="checkBalance">
+             <wsdlsoap:operation soapAction=""/>
+             <wsdl:input name="CheckBalanceRequest">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:input>
+             <wsdl:output name="CheckBalanceResponse">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:output>
+        </wsdl:operation>
+
+
+        <wsdl:operation name="fundRequest">
+             <wsdlsoap:operation soapAction=""/>
+             <wsdl:input name="FundRequest">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:input>
+             <wsdl:output name="FundResponse">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:output>
+        </wsdl:operation>
+
+
+        <wsdl:operation name="cardBalanceRefund">
+             <wsdlsoap:operation soapAction=""/>
+             <wsdl:input name="CardBalanceRefundRequest">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:input>
+             <wsdl:output name="CardBalanceRefundResponse">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:output>
+        </wsdl:operation>
+
+
+        <wsdl:operation name="transactionUpload">
+             <wsdlsoap:operation soapAction=""/>
+             <wsdl:input name="TransactionUploadRequest">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:input>
+             <wsdl:output name="TransactionUploadResponse">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:output>
+        </wsdl:operation>
+
+
+        <wsdl:operation name="batchUpload">
+             <wsdlsoap:operation soapAction=""/>
+             <wsdl:input name="BatchUploadRequest">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:input>
+             <wsdl:output name="BatchUploadResponse">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:output>
+        </wsdl:operation>
+
+
+        <wsdl:operation name="parameterRequest">
+             <wsdlsoap:operation soapAction=""/>
+                 <wsdl:input name="ParameterRequest">
+             <wsdlsoap:body use="literal"/>
+             </wsdl:input>
+             <wsdl:output name="ParameterResponse">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:output>
+        </wsdl:operation>
+
+
+         <wsdl:operation name="networkRequest">
+             <wsdlsoap:operation soapAction=""/>
+             <wsdl:input name="NetworkRequest">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:input>
+             <wsdl:output name="NetworkResponse">
+                 <wsdlsoap:body use="literal"/>
+             </wsdl:output>
+         </wsdl:operation>
+
+    </wsdl:binding>
+
+    <wsdl:service name="oglfundws">
+        <wsdl:port name="oglfundwsPort" binding="impl:oglfundwsSoapBinding">
+            <wsdlsoap:address location="http://wstest.oriongateway.com:22835/willani2/services/oglfundws/"/>
+        </wsdl:port> 
+    </wsdl:service>
+    
+</wsdl:definitions>
+
