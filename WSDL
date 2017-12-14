@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:impl="http://ws.fund.ogl.org" targetNamespace="http://wstest.oriongateway.com:22835/willani2/services/oglfundws/">
     <wsdl:types>
-    <schema targetNamespace="http://wstest.oriongateway.com:22835/willani2/services/oglfundws/" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified">
+    <schema targetNamespace="http://ws.fund.ogl.org" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified">
         <xsd:import schemaLocation="oglfundws?xsd=xmime.xsd" namespace="http://www.w3.org/2005/05/xmlmime"/>
 
         <element name="LoginRequest">
