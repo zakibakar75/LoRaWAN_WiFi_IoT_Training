@@ -1,5 +1,5 @@
 /*
-  MQTT Connection - Sending Dust Sensor Information
+  MQTT Connection - Sending Sensor Information
 */
 
 #include "DHT.h"
