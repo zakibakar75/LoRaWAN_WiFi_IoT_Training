@@ -22,16 +22,11 @@
  * 29 December 2016 Modified by Zaki to cater for RF95 + Arduino 
  *******************************************************************************/
 
-#include "DHT.h"
 #include <SPI.h>
 #include <lmic.h>
 #include <hal/hal.h>
-//#include <avr/sleep.h>
-
-DHT dht;                           // instance of DHT sensor
+                        
 volatile float averageVcc = 0.0;
-//int wakePin = 3;                 // pin used for waking up. I attach vibration sensor SW-420 and set to the highest sensitivity.
-//int count=0;
 
 
 /************************************* OTAA Section : must fill these ******************************************************************/
@@ -87,10 +82,7 @@ void os_getDevKey (u1_t* buf) { }
 
 /********************************************* ABP Section Ends ***************************************************************************/
 
-
-//static uint8_t mydata[] = "Hello, mine is ABP!";
 static osjob_t sendjob;
-
 
 /* Schedule TX every this many seconds (might become longer due to duty
    cycle limitations). */
@@ -139,11 +131,29 @@ void onEvent (ev_t ev) {
         case EV_TXCOMPLETE:
             Serial.println(F("EV_TXCOMPLETE (includes waiting for RX windows)"));
             if(LMIC.dataLen) {
-                /* data received in rx slot after tx */
-                Serial.print(F("Data Received: "));
-                Serial.write(LMIC.frame+LMIC.dataBeg, LMIC.dataLen);
-                Serial.println();
+                 // data received in rx slot after tx
+                 Serial.print(F("Received "));
+                 Serial.print(LMIC.dataLen);
+                 Serial.print(F(" bytes of payload: 0x"));
+                 for (int i = 0; i < LMIC.dataLen; i++) {
+                    if (LMIC.frame[LMIC.dataBeg + i] < 0x10) 
+                    {
+                        Serial.print(F("0"));
+                    }
+                    Serial.print(LMIC.frame[LMIC.dataBeg + i], HEX);
+                    
+                    if (i==0) //check the first byte
+                    {
+                      if (LMIC.frame[LMIC.dataBeg + 0] == 0x00)
+                      {
+                          Serial.print(F(" Yes!!!! "));
+                      }
+                    }
+                    
+                 }
+                 Serial.println();
             }
+            
             /* Schedule next transmission */
             os_setTimedCallback(&sendjob, os_getTime()+sec2osticks(TX_INTERVAL), do_send);
             break;
@@ -179,28 +189,7 @@ void do_send(osjob_t* j){
     } else {
         /* Prepare upstream data transmission at the next possible time. */
 
-        //count++;
-        Serial.println(" ");   
-        //if(count > 2)
-        //{
-        //   count = 1;
-        //   delay(2000);
-        //   LMIC_setSleep();
-        //   sleepNow();     // sleep function called here
-        //}  
-
-
-        /****** Send "Hello, Mine is ABP" ******/
-        //LMIC_setTxData2(1, mydata, sizeof(mydata)-1, 0);
-        /**************************************/
-        
-        /******* Proximity Sensor *************/
-        //Serial.print("\nDistance: ");
-        //uint8_t Distance = sonar.ping_cm();
-        //Serial.print(Distance);
-        //Serial.println("cm");
-        //message[0] = Distance;
-        /**************************************/
+        Serial.println(" ");  
         
         /******* Voltage Sensor ***************/
         averageVcc = averageVcc + (float) readVcc();
@@ -223,28 +212,7 @@ void do_send(osjob_t* j){
         message[4] = highByte(averageIntTemp);
         message[5] = lowByte(averageIntTemp);
         /****************************************************/
-
-        /************** For DHT22 Sensor ********************/
-        //delay(dht.getMinimumSamplingPeriod());
-
-        //Serial.print(dht.getHumidity());
-        //Serial.print("\t");
-        //Serial.println(dht.getTemperature());
-
-        //int16_t averageHumidity = dht.getHumidity() * 100;
-        //Serial.print(averageHumidity);
-        //Serial.print(" % \n");
-        //message[2] = highByte(averageHumidity);
-        //message[3] = lowByte(averageHumidity);
-
-        //int16_t averageTemp = dht.getTemperature() * 100;
-        //Serial.print(averageTemp);
-        //Serial.print(" Celcius \n");
-        //message[4] = highByte(averageTemp);
-        //message[5] = lowByte(averageTemp);
-        /************** End of DHT22 Sensor ********************/
-        
-        
+       
         LMIC_setTxData2(1, message, sizeof(message), 0);        
         Serial.println(F("Packet queued"));
         /*Print Freq being used*/
@@ -262,13 +230,6 @@ void setup() {
     Serial.begin(115200);
     Serial.println(F("Starting"));   
 
-    /**** for DHT22 sensor ******/
-    dht.setup(4); // data pin 4
-    /****************************/
-
-    //pinMode(wakePin, INPUT);  
-    //attachInterrupt(1, wakeUpNow, RISING); // use interrupt 1 (pin 3) and run function wakeUpNow when pin 3 gets RISING
-                                           // once vibration is detected, the rising of the pin signal will wake the board.  
     LoraInitialization();  // Do all Lora Init Stuff
 
     /* Start job */
@@ -323,25 +284,6 @@ double GetTemp(void)
   return (t);
 }
 
-//void sleepNow() {  
-//    set_sleep_mode(SLEEP_MODE_PWR_DOWN);   // sleep mode is set here  
-//    sleep_enable();          // enables the sleep bit in the mcucr register  
-//    attachInterrupt(1,wakeUpNow, RISING); // use interrupt 1 (pin 3) and run function  
-//    sleep_mode();            // here the device is actually put to sleep!!  
-//    // THE PROGRAM CONTINUES FROM HERE AFTER WAKING UP  
-//    sleep_disable();         // first thing after waking from sleep: disable sleep...  
-//    detachInterrupt(1);      // disables interrupt 1 on pin 3 so the wakeUpNow code will not be executed during normal running time. 
-//    LMIC_setStandby();
-//    LoraInitialization();
-//}  
-
-//void wakeUpNow() {  
-  // execute code here after wake-up before returning to the loop() function  
-  // timers and code using timers (serial.print and more...) will not work here.  
-  // we don't really need to execute any special functions here, since we  
-  // just want the thing to wake up  
-//}  
-
 
 void LoraInitialization(){
   /* LMIC init */
@@ -371,11 +313,7 @@ void LoraInitialization(){
     LMIC_setLinkCheckMode(0);
 
     /* Set data rate and transmit power (note: txpow seems to be ignored by the library) */
-    //LMIC_setDrTxpow(DR_SF7,14); 
     LMIC_setDrTxpow(DR_SF12,20);  //lowest Datarate possible in 915MHz region
-    
-    /* Start job */
-    //do_send(&sendjob);
-}
 
+}
 
