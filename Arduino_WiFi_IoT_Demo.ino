@@ -1,35 +1,34 @@
-/*
-  MQTT Connection - Sending Sensor Information
-*/
+//Code for WiFi MQTT
+//Zaki, 13 August 2018
+//Optimized to lower memory usage
 
-#include "DHT.h"
 #include "WiFiEsp.h"
 #include <PubSubClient.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ArduinoJson.h>
+#include "SoftwareSerial.h"
 
 #define BUILTIN_LED 13
 
-// Emulate Serial1 on pins 2/3 if not present
+// Emulate Serial1 on pins 6/7 if not present
 #ifndef HAVE_HWSERIAL1
 #include "SoftwareSerial.h"
-SoftwareSerial Serial1(2, 3); // RX, TX
+SoftwareSerial Serial1(2,3); // RX, TX
 #endif
 
-DHT dht;                              // instance of DHT sensor
 WiFiEspClient client;                 // instance of WiFi ESP Client
 PubSubClient mqttClient(client);      // PubSub using the WiFI ESP Client
 
-const char* server = "mqtt.dioty.co"; // MQTT server (of your choice)
-char ssid[] = "MyRouter9";             // your network SSID (name)
+const char* server = "tracker.my";    // MQTT server (of your choice)
+char ssid[] = "MyRouter10";           // your network SSID (name)
 char pass[] = "motorolaradio";        // your network password
 int status = WL_IDLE_STATUS;          // the Wifi radio's status
 
 /********** For any JSON packet creation ************/
 long lastMsg = 0;
-char msg[180];
+char msg[100];
 char temp[20], temp2[20], temp3[20];
 int value = 0;
 /************* end for JSON packet ******************/
@@ -40,11 +39,6 @@ volatile float averageVcc = 0.0;
 
 void setup()
 {
-
-  /**** for DHT22 sensor ******/
-  //dht.setup(4); // data pin 4
-  /****************************/
-
   // initialize serial for debugging
   Serial.begin(115200);
   // initialize serial for ESP module
@@ -54,32 +48,72 @@ void setup()
 
   // check for the presence of the shield
   if (WiFi.status() == WL_NO_SHIELD) {
-    Serial.println("WiFi shield not present");
+    Serial.println(F("WiFi shield not present"));
     // don't continue
     while (true);
   }
 
   // attempt to connect to WiFi network
   while ( status != WL_CONNECTED) {
-    Serial.print("Attempting to connect to WPA SSID: ");
+    Serial.print(F("Attempting to connect to WPA SSID: "));
     Serial.println(ssid);
     // Connect to WPA/WPA2 network
     status = WiFi.begin(ssid, pass);
   }
 
-  Serial.println("You're connected to the network");
+  Serial.println(F("You're connected to the network"));
 
-  delay(1500);
+  Serial.println();
+  printCurrentNet();
+  printWifiData();
+  
+  delay(2000);
+
   mqttClient.setServer(server, 1883);
-  mqttClient.setCallback(callback);
+  //mqttClient.setCallback(callback);
+  
 }
 
+void loop()
+{
+  StaticJsonBuffer<50> jsonBuffer;
+  JsonObject& root = jsonBuffer.createObject();
+
+  if (!mqttClient.connected()) {
+    reconnect();
+  }
+
+  delay(1000);
+  mqttClient.loop();  
+
+  /*
+  /******* Voltage Sensor ***************/
+  dtostrf( (float) readVcc(), 3, 0, temp );
+  root["Voltage"] = temp;
+  /**************************************/
+
+  /************** For Internal Temperature ************/
+  dtostrf( 0, 3, 2, temp2 );  //Humidity set to 0.00
+  root["Humidity"] = temp2;
+
+  dtostrf( (float) GetTemp(), 3, 2, temp3 );
+  root["Temperature"] = temp3;
+  /****************************************************/
+
+  root.printTo(msg);
+
+  Serial.println();
+  Serial.println(F("Publish message : "));
+  Serial.println(msg);
+  mqttClient.publish("UNO1", msg);
+  
+}
 
 void printWifiData()
 {
   // print your WiFi shield's IP address
   IPAddress ip = WiFi.localIP();
-  Serial.print("IP Address: ");
+  Serial.print(F("IP Address: "));
   Serial.println(ip);
 
   // print your MAC address
@@ -87,14 +121,14 @@ void printWifiData()
   WiFi.macAddress(mac);
   char buf[20];
   sprintf(buf, "%02X:%02X:%02X:%02X:%02X:%02X", mac[5], mac[4], mac[3], mac[2], mac[1], mac[0]);
-  Serial.print("MAC address: ");
+  Serial.print(F("MAC address: "));
   Serial.println(buf);
 }
 
 void printCurrentNet()
 {
   // print the SSID of the network you're attached to
-  Serial.print("SSID: ");
+  Serial.print(F("SSID: "));
   Serial.println(WiFi.SSID());
 
   // print the MAC address of the router you're attached to
@@ -102,19 +136,19 @@ void printCurrentNet()
   WiFi.BSSID(bssid);
   char buf[20];
   sprintf(buf, "%02X:%02X:%02X:%02X:%02X:%02X", bssid[5], bssid[4], bssid[3], bssid[2], bssid[1], bssid[0]);
-  Serial.print("BSSID: ");
+  Serial.print(F("BSSID: "));
   Serial.println(buf);
 
   // print the received signal strength
   long rssi = WiFi.RSSI();
-  Serial.print("Signal strength (RSSI): ");
+  Serial.print(F("Signal strength (RSSI): "));
   Serial.println(rssi);
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
+  Serial.print(F("Message arrived ["));
   Serial.print(topic);
-  Serial.print("] ");
+  Serial.print(F("] "));
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
   }
@@ -131,21 +165,23 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 }
 
+
 void reconnect() {
   // Loop until we're reconnected
   while (!mqttClient.connected()) {
-    Serial.print("Attempting MQTT connection...");
+    Serial.println();
+    Serial.print(F("Attempting MQTT connection..."));
     // Attempt to connect
-    if (mqttClient.connect(NULL, "zaki.bm@gmail.com", "aa3ca97e")) {
-      Serial.println("connected");
+    if (mqttClient.connect(NULL, "zaki.bm@gmail.com", "88888888")) {
+      Serial.println(F("connected"));
       // Once connected, publish an announcement...
-      mqttClient.publish("/zaki.bm@gmail.com/1234", "hello world");
+      mqttClient.publish("UNO1", "hello world");
       // ... and resubscribe
-      //mqttClient.subscribe("/zaki.bm@gmail.com/1234");
+      //mqttClient.subscribe("UNO1Rx");
     } else {
-      Serial.print("failed, rc=");
+      Serial.print(F("failed, rc="));
       Serial.print(mqttClient.state());
-      Serial.println(" try again in 5 seconds");
+      Serial.println(F(" try again in 5 seconds"));
       // Wait 5 seconds before retrying
       delay(5000);
     }
@@ -196,70 +232,4 @@ double GetTemp(void)
   return (t);
 }
 
-
-void loop() {
-
-  StaticJsonBuffer<200> jsonBuffer;
-  JsonObject& root = jsonBuffer.createObject();
-
-  if (!mqttClient.connected()) {
-    reconnect();
-  }
-
-  delay(1000);
-  mqttClient.loop();  
-
-  /******* Voltage Sensor ***************/
-  averageVcc = averageVcc + (float) readVcc();
-  int16_t averageVccInt = round(averageVcc);
-  Serial.print(averageVccInt);
-  Serial.print(" mV \n"); 
-  //message[0] = highByte(averageVccInt);
-  //message[1] = lowByte(averageVccInt);
-  
-  dtostrf( averageVccInt, 3, 2, temp );
-  root["Voltage"] = temp;
-  
-  delay(1000);
-  averageVcc = 0;
-  /**************************************/
-
-  /************** For Internal Temperature ************/
-  Serial.println(F("Internal Temperature Sensor"));
-  Serial.println(GetTemp(),1);
-  delay(1000);
-  int16_t averageIntTemp = GetTemp();
-  Serial.println(averageIntTemp);
-  
-  dtostrf( 0, 3, 2, temp2 );
-  root["Humidity"] = temp2;
-
-  dtostrf( averageIntTemp, 3, 2, temp3 );
-  root["Temperature"] = temp3;
-  /****************************************************/
-
-  /************** For DHT22 Sensor ********************/
-  //delay(dht.getMinimumSamplingPeriod());
-
-  //Serial.print(dht.getHumidity());
-  //Serial.print("\t");
-  //Serial.print(dht.getTemperature());
-
-  //dtostrf( dht.getHumidity(), 3, 2, temp2 );
-  //root["Humidity"] = temp2;
-
-  //dtostrf( dht.getTemperature(), 3, 2, temp3 );
-  //root["Temperature"] = temp3;
-  /************** End of DHT22 Sensor ********************/
-
-  root.printTo(msg);
-
-  Serial.println();
-  Serial.println("Publish message : ");
-  Serial.println(msg);
-  mqttClient.publish("/zaki.bm@gmail.com/1234", msg);  
-
-  
-
-}
 
