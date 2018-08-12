@@ -172,7 +172,7 @@ void reconnect() {
     Serial.println();
     Serial.print(F("Attempting MQTT connection..."));
     // Attempt to connect
-    if (mqttClient.connect(NULL, "zaki.bm@gmail.com", "88888888")) {
+    if (mqttClient.connect(NULL, "zaki.bm@gmail.com", "xxxxxxxx")) {
       Serial.println(F("connected"));
       // Once connected, publish an announcement...
       mqttClient.publish("UNO1", "hello world");
