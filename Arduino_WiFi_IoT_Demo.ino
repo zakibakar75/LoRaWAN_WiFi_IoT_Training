@@ -23,7 +23,7 @@ PubSubClient mqttClient(client);      // PubSub using the WiFI ESP Client
 
 const char* server = "tracker.my";    // MQTT server (of your choice)
 char ssid[] = "MyRouter10";           // your network SSID (name)
-char pass[] = "motorolaradio";        // your network password
+char pass[] = "xxxxxxxxxxxxxxxx";        // your network password
 int status = WL_IDLE_STATUS;          // the Wifi radio's status
 
 /********** For any JSON packet creation ************/
