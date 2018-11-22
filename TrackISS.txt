@@ -1,0 +1,111 @@
+[
+    {
+        "id": "b7f2c16d.fd3d3",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a880370b.25c328",
+        "type": "debug",
+        "z": "b7f2c16d.fd3d3",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 670,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d90d4eed.fa7a7",
+        "type": "inject",
+        "z": "b7f2c16d.fd3d3",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 40,
+        "wires": [
+            [
+                "16e31748.4f62e9"
+            ]
+        ]
+    },
+    {
+        "id": "16e31748.4f62e9",
+        "type": "http request",
+        "z": "b7f2c16d.fd3d3",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://api.open-notify.org/iss-now.json",
+        "tls": "",
+        "x": 290,
+        "y": 40,
+        "wires": [
+            [
+                "64c22ea4.8857"
+            ]
+        ]
+    },
+    {
+        "id": "64c22ea4.8857",
+        "type": "json",
+        "z": "b7f2c16d.fd3d3",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 470,
+        "y": 40,
+        "wires": [
+            [
+                "59398ff3.58b7b"
+            ]
+        ]
+    },
+    {
+        "id": "59398ff3.58b7b",
+        "type": "function",
+        "z": "b7f2c16d.fd3d3",
+        "name": "",
+        "func": "var issLocation = msg.payload.iss_position;\nmsg.payload = {\n    name : \"ISS\",\n    lat : parseFloat(issLocation.latitude),\n    lon : parseFloat(issLocation.longitude)\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 140,
+        "wires": [
+            [
+                "a880370b.25c328",
+                "fb6befa1.1ae96"
+            ]
+        ]
+    },
+    {
+        "id": "fb6befa1.1ae96",
+        "type": "worldmap",
+        "z": "b7f2c16d.fd3d3",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "x": 610,
+        "y": 240,
+        "wires": []
+    }
+]
