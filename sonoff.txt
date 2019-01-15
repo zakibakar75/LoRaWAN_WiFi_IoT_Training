@@ -1,0 +1,124 @@
+[
+    {
+        "id": "b7ecde11.cccd2",
+        "type": "tab",
+        "label": "Sonoff",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "63b03237.003d8c",
+        "type": "ui_button",
+        "z": "b7ecde11.cccd2",
+        "name": "Lamp ON",
+        "group": "d805cebb.99dee",
+        "order": 0,
+        "width": "3",
+        "height": "3",
+        "passthru": false,
+        "label": "Turn ON the lamp",
+        "color": "#f44242",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "ON",
+        "payloadType": "str",
+        "topic": "cmnd/sonoff800/POWER",
+        "x": 230,
+        "y": 140,
+        "wires": [
+            [
+                "ac8357f3.2a4c58"
+            ]
+        ]
+    },
+    {
+        "id": "d3a9ebfc.75af38",
+        "type": "ui_button",
+        "z": "b7ecde11.cccd2",
+        "name": "Lamp OFF",
+        "group": "ff5f89d2.57afa8",
+        "order": 0,
+        "width": "3",
+        "height": "3",
+        "passthru": false,
+        "label": "Turn OFF the lamp",
+        "color": "#42f456",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "OFF",
+        "payloadType": "str",
+        "topic": "cmnd/sonoff800/POWER",
+        "x": 230,
+        "y": 220,
+        "wires": [
+            [
+                "ac8357f3.2a4c58"
+            ]
+        ]
+    },
+    {
+        "id": "ac8357f3.2a4c58",
+        "type": "mqtt out",
+        "z": "b7ecde11.cccd2",
+        "name": "SonoffBroker",
+        "topic": "cmnd/sonoff800/POWER",
+        "qos": "",
+        "retain": "",
+        "broker": "4717f9e3.29bae8",
+        "x": 570,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "d805cebb.99dee",
+        "type": "ui_group",
+        "z": "",
+        "name": "Lamp ON",
+        "tab": "89f0a53e.ef5058",
+        "order": 1,
+        "disp": false,
+        "width": "3",
+        "collapse": false
+    },
+    {
+        "id": "ff5f89d2.57afa8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Lamp OFF",
+        "tab": "89f0a53e.ef5058",
+        "order": 2,
+        "disp": false,
+        "width": "3",
+        "collapse": false
+    },
+    {
+        "id": "4717f9e3.29bae8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "SonoffBroker",
+        "broker": "tracker.my",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "89f0a53e.ef5058",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Sonoff",
+        "icon": "dashboard",
+        "order": 8
+    }
+]
