@@ -1,25 +1,32 @@
 [
     {
-        "id": "76a3bb9e.b6fad4",
+        "id": "c43adf94.b8b92",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "86e3ea11.c970f8",
         "type": "mqtt in",
-        "z": "25ea03.6d61f5fe",
-        "name": "MyDioty Broker",
-        "topic": "/zaki.bm@gmail.com/1234/#",
+        "z": "c43adf94.b8b92",
+        "name": "MyMQTT Broker",
+        "topic": "realzaki/#",
         "qos": "2",
-        "broker": "b57cf76e.9d6308",
-        "x": 160,
+        "broker": "2c07fc99.845b34",
+        "x": 180,
         "y": 100,
         "wires": [
             [
-                "a2147d66.3b44b",
-                "facda6c0.8392a8"
+                "abd62523.a06ea8",
+                "b20bc222.30edb"
             ]
         ]
     },
     {
-        "id": "a2147d66.3b44b",
+        "id": "abd62523.a06ea8",
         "type": "switch",
-        "z": "25ea03.6d61f5fe",
+        "z": "c43adf94.b8b92",
         "name": "Topic Switching",
         "property": "topic",
         "propertyType": "msg",
@@ -53,7 +60,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 5,
-        "x": 260,
+        "x": 280,
         "y": 260,
         "wires": [
             [],
@@ -61,30 +68,30 @@
             [],
             [],
             [
-                "afa746b7.10f928"
+                "c3e27387.35652"
             ]
         ]
     },
     {
-        "id": "facda6c0.8392a8",
+        "id": "b20bc222.30edb",
         "type": "debug",
-        "z": "25ea03.6d61f5fe",
+        "z": "c43adf94.b8b92",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 490,
+        "x": 510,
         "y": 100,
         "wires": []
     },
     {
-        "id": "afa746b7.10f928",
+        "id": "c3e27387.35652",
         "type": "ui_chart",
-        "z": "25ea03.6d61f5fe",
+        "z": "c43adf94.b8b92",
         "name": "",
-        "group": "87c6b0a8.e11ad",
+        "group": "ccb4d6a6.1f8a78",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -114,7 +121,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 500,
+        "x": 520,
         "y": 300,
         "wires": [
             [],
@@ -122,11 +129,11 @@
         ]
     },
     {
-        "id": "b57cf76e.9d6308",
+        "id": "2c07fc99.845b34",
         "type": "mqtt-broker",
-        "z": "25ea03.6d61f5fe",
-        "name": "MyDioty MQTT Broker",
-        "broker": "mqtt.dioty.co",
+        "z": "c43adf94.b8b92",
+        "name": "MyMQTT Broker",
+        "broker": "tracker.my",
         "port": "1883",
         "clientid": "",
         "usetls": false,
@@ -145,18 +152,18 @@
         "willPayload": ""
     },
     {
-        "id": "87c6b0a8.e11ad",
+        "id": "ccb4d6a6.1f8a78",
         "type": "ui_group",
         "z": "",
         "name": "Noise Chart",
-        "tab": "dd22beb1.f2419",
+        "tab": "489a81c8.30a41",
         "order": 1,
         "disp": true,
         "width": "10",
         "collapse": false
     },
     {
-        "id": "dd22beb1.f2419",
+        "id": "489a81c8.30a41",
         "type": "ui_tab",
         "z": "",
         "name": "Sensor Node App",
