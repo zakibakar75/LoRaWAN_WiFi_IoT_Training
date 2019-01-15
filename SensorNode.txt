@@ -33,27 +33,27 @@
         "rules": [
             {
                 "t": "eq",
-                "v": "/zaki.bm@gmail.com/1234/Gyroscope/x",
+                "v": "realzaki/Gyroscope/x",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/zaki.bm@gmail.com/1234/Gyroscope/y",
+                "v": "realzaki/Gyroscope/y",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/zaki.bm@gmail.com/1234/Gyroscope/z",
+                "v": "realzaki/Gyroscope/z",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/zaki.bm@gmail.com/1234/battery/percentage",
+                "v": "realzaki/battery/percentage",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/zaki.bm@gmail.com/1234/noise/decibels",
+                "v": "realzaki/noise/decibels",
                 "vt": "str"
             }
         ],
@@ -68,7 +68,8 @@
             [],
             [],
             [
-                "c3e27387.35652"
+                "c3e27387.35652",
+                "fdb79ab9.052a38"
             ]
         ]
     },
@@ -77,7 +78,7 @@
         "type": "debug",
         "z": "c43adf94.b8b92",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -127,6 +128,20 @@
             [],
             []
         ]
+    },
+    {
+        "id": "fdb79ab9.052a38",
+        "type": "debug",
+        "z": "c43adf94.b8b92",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 600,
+        "y": 220,
+        "wires": []
     },
     {
         "id": "2c07fc99.845b34",
