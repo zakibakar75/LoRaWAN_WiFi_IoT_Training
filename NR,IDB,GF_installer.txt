@@ -1,6 +1,0 @@
-Node-Red : https://nodered.org/docs/platforms/windows
-
-Grafana : https://drive.google.com/file/d/15N69boT3ek3M6qlAVQVItP2PkxO61ogP/view?usp=sharing
-
-InfluxDB : https://drive.google.com/file/d/1RsyZNTfcRBqEsBY47xgY2LwqIiOfRsZr/view?usp=sharing
-
