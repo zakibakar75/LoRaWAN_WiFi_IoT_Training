@@ -1,7 +1,5 @@
 Node-Red : https://nodered.org/docs/platforms/windows
 
-Grafana : https://drive.google.com/file/d/15N69boT3ek3M6qlAVQVItP2PkxO61ogP/view?usp=sharing
-
-InfluxDB : https://drive.google.com/file/d/1_-WyjvD1lb41YRL_ia-htPu9gmE3E7Ty/view?usp=sharing
+InfluxDB, InfluxDB Studio, Grafana : https://drive.google.com/drive/folders/1g7CkSGekkJbcDaZLoXqxqMew8xdHjuD9?usp=sharing
 
 
