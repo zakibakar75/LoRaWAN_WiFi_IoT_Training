@@ -1,0 +1,18 @@
+[
+    {
+        "id": "a04da62d.848f08",
+        "type": "function",
+        "z": "9d379163.07367",
+        "name": "2 decimal and Number",
+        "func": "msg.payload = Number(msg.payload.toFixed(2));\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 280,
+        "wires": [
+            [
+                "c727084f.2278a8"
+            ]
+        ]
+    }
+]
